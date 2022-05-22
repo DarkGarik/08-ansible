@@ -35,7 +35,7 @@
       failed_when: create_db.rc != 0 and create_db.rc !=82
       changed_when: create_db.rc == 0
 - name: Install Vector
-  hosts: clickhouse
+  hosts: vector
   tasks:
     - block:
         - name: Get vector distrib
@@ -48,12 +48,23 @@
             url: "https://packages.timber.io/vector/latest/vector-latest-1.aarch64.rpm"
             dest: "vector-latest-1.aarch64.rpm"
     - block:
-        - name: Install clickhouse packages
+        - name: Install vector packages
           ansible.builtin.yum:
             name:
               - vector{{ vector_version }}-1.x86_64.rpm
       rescue:
-        - name: Install clickhouse packages
+        - name: Install vector packages
           ansible.builtin.yum:
             name:
               - vvector-latest-1.aarch64.rpm
+- name: Install lighthouse
+  hosts: lighthouse
+  tasks:
+    - name: Install NGINX
+      ansible.builtin.yum:
+        name: nginx, git
+    - name: Start NGINX
+      command: nginx
+    # - name: Install GIT
+    #   ansible.builtin.yum:
+    #     name: git

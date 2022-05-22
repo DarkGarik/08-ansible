@@ -5,3 +5,11 @@ clickhouse:
       # ansible_host: <IP_here>
     centos7:
       ansible_connection: docker
+vector:
+  hosts:
+    vector:
+      ansible_connection: docker
+lighthouse:
+  hosts:
+    lighthouse:
+      ansible_connection: docker
