@@ -1,5 +1,0 @@
----
-lighthouse:
-  hosts:
-    lighthouse:
-      ansible_connection: docker

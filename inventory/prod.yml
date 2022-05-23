@@ -1,15 +1,13 @@
 ---
 clickhouse:
   hosts:
-    # clickhouse-01:
-      # ansible_host: <IP_here>
-    centos7:
-      ansible_connection: docker
+    clickhouse-01:
+      ansible_host: 84.201.141.30
 vector:
   hosts:
-    vector:
-      ansible_connection: docker
+    vector-01:
+      ansible_host: 51.250.26.209
 lighthouse:
   hosts:
-    lighthouse:
-      ansible_connection: docker
+    lighthouse-01:
+      ansible_host: 84.201.142.253
