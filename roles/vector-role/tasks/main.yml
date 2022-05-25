@@ -1,0 +1,24 @@
+---
+# tasks file for vector-role
+- block:
+    - name: Get vector distrib
+      ansible.builtin.get_url:
+        url: "https://packages.timber.io/vector/{{ vector_version }}/vector-{{ vector_version }}-1.x86_64.rpm"
+        dest: "./vector{{ vector_version }}-1.x86_64.rpm"
+  rescue:
+    - name: Get vector distrib
+      ansible.builtin.get_url:
+        url: "https://packages.timber.io/vector/latest/vector-latest-1.x86_64.rpm"
+        dest: "./vector-latest-1.x86_64.rpm"
+- block:
+    - name: Install vector packages
+      ansible.builtin.yum:
+        name:
+          - vector{{ vector_version }}-1.x86_64.rpm
+      become: true
+  rescue:
+    - name: Install vector packages
+      ansible.builtin.yum:
+        name:
+          - vector-latest-1.x86_64.rpm
+      become: true

@@ -1,0 +1,9 @@
+---
+- name: Start NGINX
+  become: true
+  service:
+    name: nginx
+    state: restarted
+- name: Reload NGINX
+  become: true
+  command: nginx -s reload

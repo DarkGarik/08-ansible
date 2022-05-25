@@ -1,0 +1,33 @@
+---
+- name: Install dependencies
+  ansible.builtin.apt:
+    name: nginx, git
+  become: true
+  notify: Start NGINX
+- name: Install lighthouse
+  ansible.builtin.git:
+    repo: 'https://github.com/VKCOM/lighthouse.git'
+    dest: /var/www/lighthouse
+  become: true
+- name: Delete default nginx vhost
+  file:
+    path: /etc/nginx/sites-available/default
+    state: absent
+  become: true
+- name: Delete default nginx vhost symlink
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  become: true
+- name: Copy nginx conf
+  template:
+    src: nginx.tpl
+    dest: /etc/nginx/conf.d/ansible.conf
+  become: true
+- name: Create symlink nginx vhost
+  file:
+    src: /etc/nginx/conf.d/ansible.conf
+    dest: /etc/nginx/sites-enabled/ansible.conf
+    state: link
+  become: true
+  notify: Reload NGINX
